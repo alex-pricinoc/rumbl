@@ -38,4 +38,7 @@ defmodule Rumbl.User do
         changeset
     end
   end
+
+
+
 end
