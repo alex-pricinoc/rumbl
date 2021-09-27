@@ -22,4 +22,4 @@ config :rumbl, RumblWeb.Endpoint,
 config :logger, level: :warn
 
 # reduce the number of rounds so it does not slow down the test suite
-config :pbkdf2_elixir, :rounds, 1
+config :argon2_elixir, t_cost: 1, m_cost: 8
