@@ -1,16 +1,17 @@
-defmodule Rumbl.Repo.Migrations.CreateVideo do
+defmodule Rumbl.Repo.Migrations.CreateVideos do
   use Ecto.Migration
 
   def change do
-    create table(:video) do
+    create table(:videos) do
       add :url, :string
       add :title, :string
       add :description, :text
+      add :view_count, :text
       add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()
     end
 
-    create index(:video, [:user_id])
+    create index(:videos, [:user_id])
   end
 end
