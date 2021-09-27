@@ -23,7 +23,6 @@ defmodule RumblWeb do
 
       import Plug.Conn
       import RumblWeb.Gettext
-      import RumblWeb.Auth, only: [authenticate_user: 2]
       alias RumblWeb.Router.Helpers, as: Routes
     end
   end
@@ -49,7 +48,6 @@ defmodule RumblWeb do
 
       import Plug.Conn
       import Phoenix.Controller
-      import RumblWeb.Auth, only: [authenticate_user: 2]
     end
   end
 
@@ -67,6 +65,9 @@ defmodule RumblWeb do
 
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
+
+      import Phoenix.LiveView.Helpers
+
 
       import RumblWeb.ErrorHelpers
       import RumblWeb.Gettext

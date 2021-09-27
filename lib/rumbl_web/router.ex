@@ -1,13 +1,16 @@
 defmodule RumblWeb.Router do
   use RumblWeb, :router
 
+  import RumblWeb.UserAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
+    plug :put_root_layout, {RumblWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug RumblWeb.Auth
+    plug :fetch_current_user
   end
 
   pipeline :api do
@@ -17,15 +20,29 @@ defmodule RumblWeb.Router do
   scope "/", RumblWeb do
     pipe_through :browser
 
-    resources "/users", UserController, only: [:index, :show, :new, :create]
-
-    resources "/sessions", SessionController, only: [:new, :create, :delete]
-
     get "/", PageController, :index
+    delete "/users/log_out", UserSessionController, :delete
+  end
+
+  ## Authentication routes
+
+  scope "/", RumblWeb do
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+
+    get "/users/register", UserRegistrationController, :new
+    post "/users/register", UserRegistrationController, :create
+    get "/users/log_in", UserSessionController, :new
+    post "/users/log_in", UserSessionController, :create
+  end
+
+  scope "/", RumblWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    resources "/users", UserController, only: [:index, :show]
   end
 
   scope "/manage", RumblWeb do
-    pipe_through [:browser, :authenticate_user]
+    pipe_through [:browser, :require_authenticated_user]
 
     resources "/videos", VideoController
   end
