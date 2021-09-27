@@ -1,5 +1,6 @@
-defmodule Rumbl.User do
+defmodule Rumbl.Accounts.User do
   use Ecto.Schema
+
   import Ecto.Changeset
 
   schema "users" do
@@ -24,7 +25,7 @@ defmodule Rumbl.User do
     user
     |> changeset(params)
     |> cast(params, [:password])
-    # |> validate_required([:password])
+    |> validate_required([:password])
     |> validate_length(:password, min: 6, max: 100)
     |> put_pass_hash()
   end
@@ -38,7 +39,4 @@ defmodule Rumbl.User do
         changeset
     end
   end
-
-
-
 end
