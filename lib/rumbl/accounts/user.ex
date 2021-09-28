@@ -35,6 +35,7 @@ defmodule Rumbl.Accounts.User do
     |> cast(attrs, ~w(name username email password)a)
     |> validate_required(~w(name username)a)
     |> validate_length(:username, min: 1, max: 20)
+    |> unique_constraint(:username)
     |> validate_email()
     |> validate_password(opts)
   end
@@ -44,7 +45,7 @@ defmodule Rumbl.Accounts.User do
     |> validate_required([:email])
     |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
     |> validate_length(:email, max: 160)
-    |> unsafe_validate_unique(:email, Rumbl.Repo)
+    # |> unsafe_validate_unique(:email, Rumbl.Repo)
     |> unique_constraint(:email)
   end
 

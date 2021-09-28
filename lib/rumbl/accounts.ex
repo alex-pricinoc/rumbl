@@ -9,6 +9,10 @@ defmodule Rumbl.Accounts do
   alias Rumbl.Accounts.{User, UserToken}
 
 
+  def list_users do
+    Repo.all(User)
+  end
+
   @doc """
   Gets a user by email.
 
@@ -118,5 +122,4 @@ defmodule Rumbl.Accounts do
     Repo.delete_all(UserToken.token_and_context_query(token, "session"))
     :ok
   end
-
 end
