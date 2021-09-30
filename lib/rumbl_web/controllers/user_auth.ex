@@ -96,16 +96,25 @@ defmodule RumblWeb.UserAuth do
     {user_token, conn} = ensure_user_token(conn)
 
     cond do
-      _user = conn.assigns[:current_user] ->
-        _conn = conn
+      user = conn.assigns[:current_user] ->
+        put_current_user(conn, user)
 
       user = user_token && Accounts.get_user_by_session_token(user_token) ->
-        assign(conn, :current_user, user)
+        put_current_user(conn, user)
 
       true ->
         assign(conn, :current_user, nil)
     end
   end
+
+  defp put_current_user(conn, user) do
+    token = Phoenix.Token.sign(conn, "user socket", user.id)
+
+    conn
+    |> assign(:current_user, user)
+    |> assign(:user_token, token)
+  end
+
 
   defp ensure_user_token(conn) do
     if user_token = get_session(conn, :user_token) do
