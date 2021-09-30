@@ -22,6 +22,7 @@ defmodule RumblWeb.Router do
 
     get "/", PageController, :index
     delete "/users/log_out", UserSessionController, :delete
+    get "/watch/:id", WatchController, :show
   end
 
   ## Authentication routes
