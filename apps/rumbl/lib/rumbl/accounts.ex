@@ -8,9 +8,23 @@ defmodule Rumbl.Accounts do
   alias Rumbl.Repo
   alias Rumbl.Accounts.{User, UserToken}
 
+  def get_user_by(params) do
+    Repo.get_by(User, params)
+  end
 
   def list_users do
     Repo.all(User)
+  end
+
+  def list_users_with_ids(ids) do
+    Repo.all(from(u in User, where: u.id in ^ids))
+  end
+
+
+  def create_user(attrs \\ %{}) do
+    %User{}
+    |> User.registration_changeset(attrs)
+    |> Repo.insert()
   end
 
   @doc """
