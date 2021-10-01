@@ -38,7 +38,7 @@ defmodule RumblWeb.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.6.0"},
-      # {:phoenix_pubsub, "~> 1.1"},
+      {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},

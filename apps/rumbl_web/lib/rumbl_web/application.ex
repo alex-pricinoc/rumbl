@@ -8,7 +8,7 @@ defmodule RumblWeb.Application do
   def start(_type, _args) do
     children = [
       RumblWeb.Endpoint,
-      # RumblWeb.Presence,
+      RumblWeb.Presence,
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
