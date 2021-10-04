@@ -1,11 +1,3 @@
-#---
-# Excerpted from "Programming Phoenix 1.4",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material,
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose.
-# Visit http://www.pragmaticprogrammer.com/titles/phoenix14 for more book information.
-#---
 defmodule InfoSys.Cache do
   use GenServer
 
@@ -29,25 +21,6 @@ defmodule InfoSys.Cache do
   end
   
   @clear_interval :timer.seconds(60)
-
-  def init(opts) do
-    state = %{
-      interval: opts[:clear_interval] || @clear_interval,
-      timer: nil,
-      table: new_table(opts[:name])
-    }
-
-    {:ok, schedule_clear(state)}
-  end
-
-  def handle_info(:clear, state) do 
-    :ets.delete_all_objects(state.table)
-    {:noreply, schedule_clear(state)}
-  end
-
-  defp schedule_clear(state) do 
-    %{state | timer: Process.send_after(self(), :clear, state.interval)}
-  end
 
   def init(opts) do
     state = %{
